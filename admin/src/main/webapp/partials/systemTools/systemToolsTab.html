@@ -1,0 +1,31 @@
+<div class="">
+	<div class="spinner-wrapper" ng-show="showSpinner">
+	    <div class="spinner" title="Getting Data From Server"></div>
+		<div class="spinner-content">Loading...</div>
+	</div>
+    <div class="mar-t20">
+	    <h4 class="h-SYSTEM">Categories</h4>
+	       <ul class="system-list">
+	           <li ng-repeat="category in categories">{{category}}<button type="button" class="cancel" title="Remove Category" alt="Remove Category" ng-click="removeCategory(category)"><span aria-hidden="true" class="icon-close"></span></button></li>
+	       </ul>
+	       <div class="mar-t20">
+		       <input ng-model="newCategory" placeholder="Add a Category" />
+	           <button type="button" class="btn plus" ng-click="addCategory(newCategory)" title="Add Category" alt="Add Category" ><span aria-hidden="true" class="icon-plus"></span></button>
+	       </div>
+    </div>
+    <div class="divider"></div>
+	    <h4 class="h-SYSTEM">System Topics</h4>
+	       <ul class="system-list">
+	           <li ng-repeat="topic in systemTopics">{{topic}}<button type="button" class="cancel" title="Remove Topic" alt="Remove Topic" ng-click="removeSystemTopic(topic)"><span aria-hidden="true" class="icon-close"></span></button></li>
+	       </ul>
+	    <div class="mar-t20">
+		    <input ng-model="newSystemTopic" placeholder="Add a System Topic" />
+		    <button type="button" class="btn plus" ng-click="addSystemTopic(newSystemTopic)" title="Add System Topic" alt="Add System Topic" ><span aria-hidden="true" class="icon-plus"></span></button>
+	    </div>
+    <div class="divider"></div>
+	    <h4 class="h-SYSTEM">System Cache</h4>
+	    <div class="mar-t20">
+	        <button class="btn" ng-click="clearSystemCache()">Clear System Cache</button>
+	    </div>
+	<div class="divider"></div>
+</div>

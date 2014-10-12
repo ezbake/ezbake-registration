@@ -1,0 +1,11 @@
+<div class="dialog-window-close" ng-click="close()"><span aria-hidden="true" class="icon-close"></span></div>
+<div class="">
+	<span>
+		<h2>Confirm Deletion</h2>
+		<p>Delete application {{app[0].appName}} along with all its services permanently from data store.</p>
+		<div class="centered">
+		    <button class="btn-cntrl" ng-click="deleteApp(appSecId, currentStatus);close()">Yes, Delete Application Permanently</button>
+		    <button class="btn-cntrl" ng-click="close()">Cancel</button>
+		</div>
+	</span>
+</div>

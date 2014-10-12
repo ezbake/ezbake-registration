@@ -1,0 +1,85 @@
+<accordion close-others="true">
+	<div ng-repeat="status in deployerStatuses">
+	    <accordion-group is-open="accordionGroups.{{status.name}}.open" class="panel-{{status.name}}">
+	    <span ng-if="status.name === 'PENDING'" data-ng-init="allDeploymentApps(status.deployerValue)"></span>
+		    <accordion-heading>
+		    	<h4 class="h-{{status.name}}" >{{status.name}}</h4>
+		      	 <div class="arrow">
+	                 <div ng-if="!accordionGroups[status.name].open" ng-click="allDeploymentApps(status.deployerValue)"><span aria-hidden="true" class="icon-arrow-down2" title="Open"></span></div>
+	                 <div ng-if="accordionGroups[status.name].open"><span aria-hidden="true" class="icon-arrow-up2" title="Close"></span></div>
+               	</div>
+		    </accordion-heading>
+			<table class="table-header">
+		        <tr>
+		            <th>Application Settings</th>
+		            <th>Admin Controls</th>
+		        </tr>
+		    </table>
+			<div class="spinner-wrapper" ng-show="showSpinner">
+			    <div class="spinner" title="Getting Data From Server"></div>
+				<div class="spinner-content">Loading...</div>
+			</div>
+			<table ng-repeat="(appSecId, app) in deploymentApps">
+			    <tr>
+					<td>
+					    <div class="app-set">
+					        <div class="left-col"><span>Application Name:</span></div>
+						    <div class="right-col">{{app[0].appName}}</div>
+						    <div class="clearfix"></div>
+						</div>
+						<div class="app-set">
+						    <div class="left-col"><span>Point of Contact:</span></div>
+						    <div class="right-col">{{app[0].poc}}</div>
+						    <div class="clearfix"></div>
+						</div>
+						<div class="app-set">
+						    <div class="left-col"><span>Packages:</span></div>
+						    <div class="right-col">
+							        <ul class="packages">
+						       			<div ng-controller="ModalWindowCtrl">
+							        		<div ng-repeat="pkg in app">
+							        			<div ng-if="status.name !== 'ACTIVE' && status.name !== 'PENDING'"><li >{{pkg.appServiceId}}</li></div>
+							        		    <div ng-if="status.name === 'ACTIVE' || status.name === 'PENDING'" >
+							        					<li><button class="btn view-package" ng-click="open({isApprove:false, isDeploymentTemplate:true, isDelete:false, isApplicationRegistrationDetails: false, isManifestDetails : true, servicePackage : pkg, currentStatus : status.deployerValue})" dialog-window-node alt="View Application Manifest Details">
+							    						<div aria-hidden="true" class="icon-stack" title="Details"></div></button>{{pkg.appServiceId}}</li>
+							    				</div>
+							    			</div>
+						    			</div>
+								    </ul>
+						 </div>
+						 <div class="clearfix"></div>
+			    	</td>
+	       			<td class="center">		
+			      		<div class="col-controls">
+							<div ng-controller="ModalWindowCtrl">
+								<script type="text/ng-template" id="templateContentDeployment"> 
+									<dialog-window-node>		
+										<div ng-if="isManifestDetails"><span alt="Application Manifest Details"><div ng-include="'partials/deployment/applicationManifestDetails.html'"></div></span></div>
+										<div ng-if="isApprove && !isDelete && !isManifestDetails"><span alt="Approve and Deploy Application"><div ng-include="'partials/deployment/approveDeployment.html'"></div></span></div>
+                           				<div ng-if="!isApprove && !isDelete && !isManifestDetails"><span alt="Deny Application"><div ng-include="'partials/deployment/denyDeployment.html'"></div></span></div>	
+										<div ng-if="isDelete"><span alt="Delete Application"><div ng-include="'partials/deployment/deleteDeployment.html'"></div></span></div>
+									</dialog-window-node>
+   								</script>
+	   							<span ng-if="status.name === 'PENDING' && app[0].currentAppAdmin === false">
+									<button class="btn-cntrl" ng-click="open({isApprove : true, isDeploymentTemplate : true, isDelete : false, isApplicationRegistrationDetails : false, isManifestDetails : false, currentStatus : status.deployerValue})" dialog-window-node alt="Approve">Approve</button>
+									<button class="btn-cntrl" ng-click="open({isApprove : false, isDeploymentTemplate : true, isDelete : false, isApplicationRegistrationDetails : false, isManifestDetails : false, currentStatus : status.deployerValue})" dialog-window-node alt="Deny">Deny</button>
+								</span>
+								<span ng-if="status.name === 'ACTIVE' && app[0].currentAppAdmin === false">
+	                    			<button class="btn-cntrl" ng-click="open({isApprove : false, isDeploymentTemplate : true, isDelete : false, isApplicationRegistrationDetails : false, isManifestDetails : false, currentStatus : status.deployerValue})" dialog-window-node alt="Undeploy">Undeploy</button>
+	                    		</span>
+                                <span ng-if="status.name === 'DENIED' && app[0].currentAppAdmin === false">
+									<button class="btn-cntrl" ng-click="open({isApprove : true, isDeploymentTemplate : true, isDelete : true, isApplicationRegistrationDetails : false, isManifestDetails : false, currentStatus : status.deployerValue})" dialog-window-node alt="Delete">Delete</button>
+								</span>
+								<span ng-if="status.name === 'UNDEPLOYED' && app[0].currentAppAdmin === false">
+									<button class="btn-cntrl" ng-click="open({isApprove : true, isDeploymentTemplate : true, isDelete : false, isApplicationRegistrationDetails : false, isManifestDetails : false, currentStatus : status.deployerValue})" dialog-window-node alt="ReDeploy">ReDeploy</button>
+									<button class="btn-cntrl" ng-click="open({isApprove : true, isDeploymentTemplate : true, isDelete : true, isApplicationRegistrationDetails : false, isManifestDetails : false, currentStatus : status.deployerValue})" dialog-window-node alt="Delete">Delete</button>
+								</span>
+	                    		
+                       		</div> 
+	           			</div>
+	         	    </td>
+	         	</tr>
+			</table>
+	    </accordion-group>
+    </div>
+</accordion>

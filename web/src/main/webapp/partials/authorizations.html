@@ -1,0 +1,82 @@
+<div class="slide-wrapper" id="contentWrap">
+    <h1>Add Authorizations</h1>
+    <form>
+    <div class="auth-section">
+		<h2>Select Classification</h2>
+            <div class="auth-inline">
+                <ul>
+                    <span ng-hide="classifications.length">Loading classifications...</span>
+                    <li ng-repeat="classification in classifications">
+                        <input type="radio" ng-model="classification.selected" class="regular-checkbox" id="{{'Classification' + classification.portion}}" name="Classification" value="{{classification.portion}}" ng-click="setClassifications(classification)"><label for="{{'Classification' + classification.portion}}"></label>
+                        <div class="tag">{{classification.title}} ({{classification.portion}})</div>
+                    </li>
+                </ul>
+            </div> 
+	    <div class="mar-t30">
+	        <h2>Select Control Systems</h2>
+	        <div class="search">
+	            <div class="search-icon"><span aria-hidden="true" class="icon-search"></span></div>
+	            <select chosen multiple data-placeholder="Search and Add Control Systems" id="control-systems" class="search" ng-model="selectedAuthorizations.controlSystems" ng-options="control.title for control in controlSystems"></select>
+	        </div>
+	    </div>
+        <div class="mar-t30">
+            <h2>Select Dissemination Controls</h2>
+                <div class="search">
+                    <div class="search-icon"><span aria-hidden="true" class="icon-search"></span></div>
+                    <select chosen multiple data-placeholder="Search and Add Dissemination Controls" id="dissemination-controls" class="search" ng-model="selectedAuthorizations.disseminationControls" ng-options="control.title for control in disseminationControls"></select>
+                </div>
+        </div>
+        <div class="mar-t30">
+            <h2>Select Non-IC Markings</h2>
+                <div class="search">
+                    <div class="search-icon"><span aria-hidden="true" class="icon-search"></span></div>
+                    <select chosen multiple data-placeholder="Search and Add Non-IC Markings" id="non-ic-markings" class="search" ng-model="selectedAuthorizations.nonICMarkings" ng-options="nonICMarking.title for nonICMarking in nonICMarkings"></select>
+                </div>
+        </div>
+        <div class="mar-t30">
+            <h2>Select User's Citizenship</h2>
+                <div class="auth-inline pad-t10">
+                    <ul>
+                       <li>
+                           <input type="checkbox" class="regular-checkbox" id="checkbox-3-1" name="Citizenship" value="USA" ng-model="usaCitizenship" ng-click="setUSACitizenship(!usaCitizenship)"/><label for="checkbox-3-1"></label>
+                           <div class="tag">USA</div>
+                       </li>
+                       <li>
+                           <input type="checkbox" class="regular-checkbox" id="checkbox-3-2" name="FVEY Citizenship" ng-model="fveyCitizenship" ng-click="setFveyCountries(!fveyCitizenship)" /><label for="checkbox-3-2"></label>
+                           <div class="tag">FVEY</div>
+                       </li>
+                    </ul>
+                    <div class="search country">
+                        <div class="search-icon"><span aria-hidden="true" class="icon-search"></span></div>
+                        <select chosen multiple data-placeholder="Search and Add Countries" id="user-citizenship-more-countries" class="search" ng-model="selectedAuthorizations.citizenshipCountries" ng-options="country.countryName for country in citizenshipCountries"></select>
+                    </div>
+                </div>
+        </div>
+        <div class="mar-t30 organizations">
+            <h2>Organizations</h2>
+            <div class="search">
+                <auto-complete title="" actual-values="selectedAuthorizations.organizations" input-short-class="organizations"/>
+            </div>
+        </div>
+        <div class="mar-t30">
+            <h2>Add Any External Groups</h2>
+                <ul class="group-list">
+                    <li ng-repeat="group in selectedAuthorizations.externalGroups">{{group.type}}{{group.name}}<button type="button" class="cancel" title="Remove Group" alt="Remove Group" ng-click="removeExternalGroup($index)"><span aria-hidden="true" class="icon-close"></span></button>
+                    </li>
+                </ul>
+                <div class="input-container external">
+                    <div class="inline" data-ng-init="external = {}">
+                        <select name="type" ng-model="external.type" class="external-group" placeholder="Select Type">
+                            <option value="" disabled selected>Select Type</option>
+                        </select>
+                        <input class="input half additem" ng-model="external.name" placeholder="Add Name"/>
+                    </div>
+                    <div class="inline">
+                        <button type="button" class="btn plus" title="Add Group" alt="Add Group" ng-click="addExternalGroup(external); external={}"><span aria-hidden="true" class="icon-plus"></span></button>
+                    </div>
+                </div>
+        </div>
+        <input type="submit" class="btn" value="Save Authorizations" ng-click="savePortionMarkings();close()">
+    </div>
+    </form>
+</div>

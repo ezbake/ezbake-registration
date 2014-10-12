@@ -1,0 +1,61 @@
+<div class="dialog-window-close" ng-click="close()"><span aria-hidden="true" class="icon-close"></span></div>
+<div class="">
+	<div ng-repeat="(key0, values0) in servicePackage.stringManifest">
+		<h2>{{formatString(key0)}}</h2>
+		<div ng-if="type(values0) === 'string'" >
+			<div class="input-label">{{formatString(key0)}}:</div>
+			<div class="input-field">{{values0}}</div>
+			{{artifactTypeDisabled(values0)}}
+		</div>
+		<div ng-if="type(values0) === 'array'" >
+			<div class="input-label">{{formatString(key0)}}:</div>
+			<div class="input-field">
+				<div ng-repeat="val in values0">
+					{{val}}<br>
+				</div>
+		    </div>
+		</div>
+		<div ng-if="type(values0) === 'object'">
+			<div ng-repeat="(key1, values1) in values0">
+				<div ng-if="type(values1) === 'array'" >
+					<div class="input-label">{{formatString(key1)}}:</div>
+					<div class="input-field">
+						<div ng-repeat="val in values1">
+							{{val}}<br>
+						</div>
+				    </div>
+				</div>
+				<div ng-if="type(values1) === 'string'" >
+					<div class="input-label">{{formatString(key1)}}:</div>
+					<span ng-if="key1 === 'numberOfInstances'">
+						<input ng-model="numberOfInstances" value="{{setNumberOfInstances(values1)}}" class="number" >{{setNumberOfInstances(numberOfInstances)}}
+					</span> 
+					<span ng-if="key1 !== 'numberOfInstances'">
+						<div class="input-field">{{values1}}</div>
+					</span>
+				</div>
+				<div ng-if="type(values1) === 'object'">
+					<div ng-repeat="(key2, values2) in values1">
+						<div ng-if="type(values2) === 'array'" >
+							<div class="input-label">{{formatString(key2)}}:</div>
+								<div class="input-field">
+								<div ng-repeat="val in values2">
+									{{val}}<br>
+								</div>
+				    		</div>
+						</div>
+						<div ng-if="type(values2) === 'string'" >
+							<div class="input-label">{{formatString(key1)}}: {{formatString(key2)}}:</div>
+							<div class="input-field">{{values2}}</div>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+		<div class="divider"></div>
+	</div>
+	<div class="centered">
+		<button ng-disabled="servicePackage.currentAppAdmin === true || isDisabled === true || currentStatus === 'Staged'" class="btn-cntrl" ng-click="updateManifest(servicePackage.appName, servicePackage.appServiceId, numberOfInstances, currentStatus);close()">Save and ReDeploy Changes</button>
+   		<button class="btn-cntrl" ng-click="close()">Close</button>
+	</div>
+</div>

@@ -1,0 +1,14 @@
+<div class="content-wrapper" id="slide-in-container-id">
+ <tabset vertical="true" justified="true">
+		<tab select="refreshTab()" heading="Application Registration" ng-controller="AdminRegistrationCtrl" >
+			<div ng-include="'partials/registration/registrationTab.html'"></div>
+		</tab>
+		<tab select="refreshTab()" heading="Deployment" ng-controller="AdminDeploymentCtrl">
+			<div ng-include="'partials/deployment/deploymentTab.html'"></div>
+		</tab>
+		<tab select="populateTab()" heading="System Tools" ng-controller="AdminSystemToolsCtrl">
+			<div ng-include="'partials/systemTools/systemToolsTab.html'"></div>
+		</tab>
+	</tabset> 
+</div>
+<toaster-container toaster-options="{'time-out': 5000, 'close-button':true}"></toaster-container>

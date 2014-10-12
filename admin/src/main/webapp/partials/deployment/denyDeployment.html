@@ -1,0 +1,15 @@
+<div class="dialog-window-close" ng-click="close()"><span aria-hidden="true" class="icon-close"></span></div>
+<div class="">
+	<span>
+		<h2>Confirm Application Deployment Denial {{appSecId}}</h2>
+		<p>If denying an application, please inform the Point of Contact about the decision.</p>
+		<div class="POC-info">
+		    <span class="bold">POC E-mail:</span> <a href="mailto:{{app[0].poc}}">{{app[0].poc}}</a></br>
+		    <span class="bold">Application Name:</span> {{app[0].appName}}
+	    </div>
+		<div class="centered">
+		    <button class="btn-cntrl" ng-click="deployApp(appSecId, false, currentStatus);close()">Confirm Application Denial</button>
+		    <button class="btn-cntrl" ng-click="close()">Cancel</button>
+		</div>
+	</span>
+</div>

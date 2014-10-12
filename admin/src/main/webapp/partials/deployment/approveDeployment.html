@@ -1,0 +1,20 @@
+<div class="">
+	<span>
+		<h2>Confirm Approval</h2>
+		<p>By approving this application, you verify that you approve application {{app[0].appName}} to be deployed to production.</p>
+		
+		<div class="spinner-wrapper" ng-show="showDeployLoader">
+    		<div class="spinner" title="Deploying application"></div>
+			<div class="spinner-content">Deploying application...It may take a few minutes...</div>
+		</div>
+	    <div class="centered">	 
+		    <!-- If deployment fails, display error message -->
+		    <div ng-if="deployMessage.length" class="font-red mar-t10 mar-b20">
+		    	{{deployMessage}}
+	    	</div>
+	    	
+			<button class="btn-cntrl" ng-click="deployApp(appSecId, true, currentStatus)" ng-disabled="deployAppButtonDisabled === true">Yes, I Approve</button>
+		    <button class="btn-cntrl" ng-click="close()">{{deployCloseButton}}</button>
+	    </div>	
+	</span>
+</div>

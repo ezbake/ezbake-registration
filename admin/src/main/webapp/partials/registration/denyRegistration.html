@@ -1,0 +1,12 @@
+<div class="" >
+	<h2>Confirm Application Authorization Denial</h2>
+	<p>If denying an application, please inform the Point of Contact about the decision.</p>
+	<div class="POC-info">
+	    <span class="bold">POC E-mail:</span> <a href="mailto:{{app.poc}}">{{app.poc}}</a></br>
+	    <span class="bold">Application Name:</span> {{app.appName}}
+    </div>
+	<div class="centered">
+	    <button class="btn-cntrl" ng-click="registerApp(app.appId, false, currentStatus);close()">Confirm Application Denial</button>
+	    <button class="btn-cntrl" ng-click="close()">Cancel</button>
+	</div>
+</div>
