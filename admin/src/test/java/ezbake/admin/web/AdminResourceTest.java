@@ -77,7 +77,7 @@ public class AdminResourceTest {
     private static ThriftClientPool mockPool;
     private static EzbakeSecurityClient securityClientMock;
     private static TestContextResolver contextResolver;
-	private static String TEST_ID = "48454c4c4f-20-574f524c44";
+	private static String TEST_ID = "1234567890987654321";
 	private static String APP_NAME = "MyApp";
 	private static String POC = "Unit Tester";
     private static AuditLogger auditLogger;
@@ -191,8 +191,8 @@ public class AdminResourceTest {
 		ApplicationRegistration appRegMock = new ApplicationRegistration().setAppName(APP_NAME).setId("12345")
                 .setAdmins(Sets.newHashSet("CN=ezbake", "CN=tester"));
         setupStandardMocks();
-		expect(regClientMock.getRegistration(ezTokenMock, TEST_ID)).andReturn(appRegMock).anyTimes();
-
+	expect(regClientMock.getRegistration(ezTokenMock, TEST_ID)).andReturn(appRegMock).anyTimes();
+	expect(insClientMock.getAppById(TEST_ID, ezTokenMock)).andReturn(getApplication()).times(2);
         groupsMock.activateAppUser(ezTokenMock, appRegMock.getId());
         expectLastCall();
         groupsMock.modifyAppUser(ezTokenMock, appRegMock.getId(), appRegMock.getId(), appRegMock.getAppName());
@@ -213,7 +213,7 @@ public class AdminResourceTest {
 		regClientMock.denyApp(ezTokenMock, TEST_ID);
 		expectLastCall();
 		
-		replay(mockPool, securityClientMock, regClientMock, ezTokenMock, groupsMock);
+		replay(mockPool, securityClientMock, regClientMock, ezTokenMock, groupsMock, insClientMock);
 		
 		assertEquals(tested.registerApp(TEST_ID, true, contextResolver).getStatus(), Status.OK.getStatusCode());
 		assertEquals(tested.registerApp(TEST_ID, false, contextResolver).getStatus(), Status.OK.getStatusCode());
